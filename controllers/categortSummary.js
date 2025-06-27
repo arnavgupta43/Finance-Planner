@@ -1,10 +1,9 @@
 const transaction = require("../models/transaction");
 const { StatusCodes } = require("http-status-codes");
-const getSummary = require("./summary");
-
+const mongoose = require("mongoose");
 const getCategorySummary = async (req, res) => {
   try {
-    const { month, year } = req.body;
+    const { month, year } = req.query;
     const { _id: userId } = req.user;
     if (!month || !year) {
       return res.status(StatusCodes.BAD_REQUEST).json({
@@ -17,7 +16,7 @@ const getCategorySummary = async (req, res) => {
     const categorySummary = await transaction.aggregate([
       {
         $match: {
-          userId: new ObjectId("685ee26f759c37179066c6e1"),
+          userId: new mongoose.Types.ObjectId(userId),
           date: {
             $gte: startDate,
             $lt: endDate,
@@ -45,7 +44,7 @@ const getCategorySummary = async (req, res) => {
         },
       },
     ]);
-    return res.status(StatusCodes.OK).json(getSummary);
+    return res.status(StatusCodes.OK).json(categorySummary);
   } catch (error) {
     console.log(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

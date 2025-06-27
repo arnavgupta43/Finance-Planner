@@ -7,6 +7,7 @@ const express = require("express");
 const authRouter = require("./routes/authRoute");
 const summaryRoute = require("./routes/summaryRoute");
 const transactionRouter = require("./routes/transaction");
+const categortSummaryRouter = require("./routes/categorySummaryRoute");
 const app = express();
 app.use(helmet());
 app.use(
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/summary", summaryRoute);
 app.use("/api/transactions", transactionRouter);
+app.use("/api/analytics", categortSummaryRouter);
 app.use((req, res, next) => {
   res.status(404).json({ status: "Fail", msg: "Route not found" });
 });
