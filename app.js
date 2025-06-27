@@ -4,6 +4,8 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const morgan = require("morgan");
 const express = require("express");
+const authRouter = require("./routes/authRoute");
+const summaryRoute = require("./routes/summaryRoute");
 const app = express();
 app.use(helmet());
 app.use(
@@ -25,7 +27,8 @@ app.use(limiter);
 app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use("/api/auth", authRouter);
+app.use("/api/summary", summaryRoute);
 app.use((req, res, next) => {
   res.status(404).json({ status: "Fail", msg: "Route not found" });
 });

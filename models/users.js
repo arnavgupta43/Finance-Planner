@@ -1,6 +1,8 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcryptjs = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -26,7 +28,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, "Password is required"],
-      minlength: [60, "Invalid hash length"],
+      minlength: [10, "Invalid hash length"],
       select: false,
     },
     theme: {
@@ -49,6 +51,9 @@ userSchema.pre("save", async function (next) {
 
 userSchema.methods.matchPassword = function (enteredpassword) {
   return bcryptjs.compare(enteredpassword, this.password);
+};
+userSchema.methods.getUserName = function () {
+  return this.username;
 };
 
 userSchema.methods.createJWT = function () {

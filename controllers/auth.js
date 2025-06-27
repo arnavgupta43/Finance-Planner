@@ -2,6 +2,7 @@ const Users = require("../models/users");
 const { StatusCodes } = require("http-status-codes");
 const Register = async (req, res) => {
   try {
+    console.log("Route Hit");
     const { username, password, email } = req.body;
     const user = await Users.create({ username, password, email });
     if (!user) {
@@ -16,7 +17,7 @@ const Register = async (req, res) => {
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Unexpected error" });
+      .json({ msg: "Unexpected error", error: error.message });
   }
 };
 const Login = async (req, res) => {
@@ -35,11 +36,11 @@ const Login = async (req, res) => {
         .json({ status: "Failed", msg: "Incorrect Password" });
     }
     const token = user.createJWT();
-    res.status(StatusCodes.OK).json({ username: user.getName(), token });
+    res.status(StatusCodes.OK).json({ username: user.getUserName(), token });
   } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ msg: "Unexpected error" });
+      .json({ msg: "Unexpected error", error: error.message });
   }
 };
 
