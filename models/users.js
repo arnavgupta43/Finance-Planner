@@ -49,8 +49,8 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.matchPassword = function (enteredpassword) {
-  return bcryptjs.compare(enteredpassword, this.password);
+userSchema.methods.matchPassword = async function (enteredpassword) {
+  return await bcryptjs.compare(enteredpassword, this.password);
 };
 userSchema.methods.getUserName = function () {
   return this.username;

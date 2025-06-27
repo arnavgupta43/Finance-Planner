@@ -9,7 +9,7 @@ router
     [
       check("username").notEmpty().withMessage("Username must be provided"),
       check("email").isEmail().withMessage("Email must be provided"),
-      check("password").notEmpty().withMessage("Passeord must be provided"),
+      check("password").notEmpty().withMessage("Passwordd must be provided"),
     ],
     validate,
     Register

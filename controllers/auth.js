@@ -23,13 +23,13 @@ const Register = async (req, res) => {
 const Login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const user = await Users.findOne({ username });
+    const user = await Users.findOne({ username }).select("+password");
     if (!user) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ status: "Failed", msg: "User does not exist" });
     }
-    const isPasswordCorrect = user.matchPassword(password);
+    const isPasswordCorrect = await user.matchPassword(password);
     if (!isPasswordCorrect) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
