@@ -5,3 +5,8 @@ Added Validation Middleware
 Define Auth route for register and signup
 CURD OPERATIONS for transactions
 Added Category Summary used mongodb Aggregation Pipelines
+Sanitize Inout
+Helmet and Cors for security
+Exprees-Rate-Limiter for fixed number of request
+Use of JWT tokens for authentication
+Models for Users and Transaction
