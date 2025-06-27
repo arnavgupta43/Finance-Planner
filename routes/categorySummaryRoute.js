@@ -10,8 +10,18 @@ router
   .get(
     authMiddleware,
     [
-      check("month").notEmpty().withMessage("Month should not be empty"),
-      check("year").notEmpty().withMessage("Year should not be empty"),
+      check("month")
+        .notEmpty()
+        .withMessage("Month should not be empty")
+        .isString()
+        .trim()
+        .escape(),
+      check("year")
+        .notEmpty()
+        .withMessage("Year should not be empty")
+        .isString()
+        .trim()
+        .escape(),
     ],
     validate,
     getCategorySummary

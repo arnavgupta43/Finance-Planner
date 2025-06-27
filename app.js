@@ -13,7 +13,7 @@ app.use(helmet());
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "*",
-    methods: ["GET", "POST", "PATCH", "DELETE"],
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
@@ -36,12 +36,4 @@ app.use("/api/analytics", categortSummaryRouter);
 app.use((req, res, next) => {
   res.status(404).json({ status: "Fail", msg: "Route not found" });
 });
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  const status = err.status || 500;
-  const msg = err.message || "Something went wrong";
-  res.status(status).json({ status: "Error", msg });
-});
-
 module.exports = app;

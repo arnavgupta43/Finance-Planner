@@ -21,15 +21,29 @@ const validate = (req, res, next) => {
   next();
 };
 const { check } = require("express-validator");
+const { escape } = require("validator");
 
 const transactionValidators = [
   check("date").notEmpty().withMessage("Date must be provided"),
-  check("description").notEmpty().withMessage("Description must be provided"),
+  check("description")
+    .notEmpty()
+    .withMessage("Description must be provided")
+    .isString()
+    .trim()
+    .escape(),
   check("amount").notEmpty().withMessage("Amount must be provided"),
-  check("category").notEmpty().withMessage("Category must be correct"),
+  check("category")
+    .notEmpty()
+    .withMessage("Category must be correct")
+    .isString()
+    .trim()
+    .escape(),
   check("type")
     .notEmpty()
     .isIn(["Income", "Expense"])
-    .withMessage("Type must be either 'Income' or 'Expense'"),
+    .withMessage("Type must be either 'Income' or 'Expense'")
+    .isString()
+    .trim()
+    .escape(),
 ];
 module.exports = { typeValidation, transactionValidators, validate };

@@ -9,8 +9,18 @@ router
   .get(
     authMiddleware,
     [
-      check("month").notEmpty().withMessage("Month must be provided"),
-      check("year").notEmpty().withMessage("Year must be provided"),
+      check("month")
+        .notEmpty()
+        .withMessage("Month must be provided")
+        .isString()
+        .trim()
+        .escape(),
+      check("year")
+        .notEmpty()
+        .withMessage("Year must be provided")
+        .isString()
+        .trim()
+        .escape(),
     ],
     validate,
     getSummary
