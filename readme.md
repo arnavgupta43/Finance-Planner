@@ -10,3 +10,8 @@ Helmet and Cors for security
 Exprees-Rate-Limiter for fixed number of request
 Use of JWT tokens for authentication
 Models for Users and Transaction
+Testing using Postman
+
+Add the following environment variables to run:
+MONGO_URL-Database Url
+JWT_SCERET-String for hashing
